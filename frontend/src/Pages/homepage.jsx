@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CarsPages from './carsPages';
+import { useUserAuth } from '../Context/userAuth';
 
 const Homepage = () => {
+    const { userToken, userLogout } = useUserAuth();
+    
   return (
     <div>
       {/* Navbar */}
@@ -12,7 +15,23 @@ const Homepage = () => {
           <div className="hidden md:flex space-x-6">
             <Link to="/" className="text-white hover:text-gray-400">Home</Link>
             <Link to="/cars" className="text-white hover:text-gray-400">Cars</Link>
-            <Link to="/user_signup" className="text-white hover:text-gray-400">User Signup</Link>
+        
+               {userToken ? (
+                <button
+                  onClick={userLogout}
+                  className="text-white hover:text-gray-400"
+                >
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/user_signup"
+                  className="text-white hover:text-gray-400"
+                >
+                  User Signup
+                </Link>
+              )}
+            
           </div>
           <div className="md:hidden flex items-center">
             <button className="text-white">
@@ -26,7 +45,7 @@ const Homepage = () => {
       {/* Main Content */}
       <div className="p-8">
         <h1 className="text-4xl font-bold text-center text-white">Welcome to BuyCars</h1>
-        <CarsPages/>
+       
       </div>
     </div>
   );

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Assuming your API endpoint for signing up is /user/signup
-      await axios.post("/user/signup", { email, password });
-      // After successful signup, you can redirect to login or log the user in
+   
+      await axios.post("https://buycars-tjn7.onrender.com/user_auth/signup", { email, password });
+      alert("Signup successful! Redirecting to login...");
+
+    
+      navigate("/user_login");
     } catch (err) {
       setError("Sign up failed. Please try again.");
       console.error(err);

@@ -4,8 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { DealerAuthProvider } from "./Context/userAuth";
-import { UserAuthProvider } from "./Context/dealerAuth";
+import { DealerAuthProvider } from "./Context/dealerAuth";
+import { UserAuthProvider } from "./Context/userAuth";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

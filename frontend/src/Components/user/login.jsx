@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-import { useUserAuth } from "../../Context/dealerAuth";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../../Context/userAuth";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { userLogin, userToken } = useUserAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { userLogin } = useUserAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true);
+    setError(""); // Reset error
     try {
       await userLogin(email, password);
-      console.log("User logged in successfully!");
-      // Redirect or update UI based on userToken
-    } catch (error) {
-      console.error("Login error:", error.message);
+      alert("Login successful!");
+      navigate("/"); // Redirect to dashboard or desired route
+    } catch (err) {
+      setError(err.response?.data?.msg || "Invalid login credentials. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -20,7 +28,9 @@ const UserLogin = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
-        
+
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input
@@ -47,9 +57,10 @@ const UserLogin = () => {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          disabled={loading}
+          className={`w-full text-white py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"}`}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </div>
     </div>
@@ -57,6 +68,3 @@ const UserLogin = () => {
 };
 
 export default UserLogin;
-
-
-

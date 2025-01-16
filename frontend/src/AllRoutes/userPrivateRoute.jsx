@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useUserAuth } from "../Context/userAuth";
 
-import { Navigate, useLocation } from 'react-router-dom';
 
 const UserPrivateRoute = ({ children }) => {
-  const isAuth = false
+  const { userToken } = useUserAuth();
   const location = useLocation();
 
-  return isAuth ? (
-    // If authenticated, render the children
+  return userToken ? (
     children
   ) : (
-    // If not authenticated, navigate to the "/signin" route
-    <Navigate to="/user_login"  />
+    <Navigate to="/user_login" state={{ from: location }} />
   );
 };
 

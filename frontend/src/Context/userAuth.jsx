@@ -1,40 +1,39 @@
 import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 
-// Create Dealer Auth Context
-const DealerAuthContext = createContext();
+// Create User Auth Context
+const UserAuthContext = createContext();
 
-// DealerAuthProvider component
-export const DealerAuthProvider = ({ children }) => {
-  const [dealerToken, setDealerToken] = useState(null);
-
-  const dealerLogin = async (email, password) => {
+// UserAuthProvider component
+export const UserAuthProvider = ({ children }) => {
+  const [userToken, setUserToken] = useState(localStorage.getItem("userToken"))
+  const userLogin = async (email, password) => {
     try {
-      const response = await axios.post("/dealer/login", { email, password });
-      setDealerToken(response.data.token);
-      localStorage.setItem("dealerToken", response.data.token); // Save token in localStorage
+      const response = await axios.post("https://buycars-tjn7.onrender.com/user_auth/login", { email, password });
+      setUserToken(response.data.token);
+      localStorage.setItem("userToken", response.data.token); // Save token in localStorage
     } catch (error) {
-      console.error("Dealer Login Error:", error.response?.data?.msg || error.message);
+      console.error("User Login Error:", error.response?.data?.msg || error.message);
     }
   };
 
-  const dealerLogout = async () => {
+  const userLogout = async () => {
     try {
-      const token = localStorage.getItem("dealerToken");
-      await axios.post("/dealer/logout", {}, { headers: { Authorization: token } });
-      setDealerToken(null);
-      localStorage.removeItem("dealerToken");
+      const token = localStorage.getItem("userToken");
+      await axios.post("https://buycars-tjn7.onrender.com/user_auth/logout", {}, { headers: { Authorization: token } });
+      setUserToken(null);
+      localStorage.removeItem("userToken");
     } catch (error) {
-      console.error("Dealer Logout Error:", error.response?.data?.msg || error.message);
+      console.error("User Logout Error:", error.response?.data?.msg || error.message);
     }
   };
 
   return (
-    <DealerAuthContext.Provider value={{ dealerToken, dealerLogin, dealerLogout }}>
+    <UserAuthContext.Provider value={{ userToken, userLogin, userLogout }}>
       {children}
-    </DealerAuthContext.Provider>
+    </UserAuthContext.Provider>
   );
 };
 
-// Custom hook to use DealerAuthContext
-export const useDealerAuth = () => useContext(DealerAuthContext);
+// Custom hook to use UserAuthContext
+export const useUserAuth = () => useContext(UserAuthContext);

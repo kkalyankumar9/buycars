@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Homepage from "./homepage";
 
 const CarsPages = () => {
   const [cars, setCars] = useState([]);
@@ -27,6 +28,7 @@ const CarsPages = () => {
 
   return (
     <div className="p-4">
+       <Homepage/>
       <h1 className="text-2xl font-bold mb-4">Car Inventory</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.map((car) => (
@@ -48,6 +50,7 @@ const CarsPages = () => {
             <p className="text-gray-600">Registration Place: {car.registrationPlace}</p>
           </div>
         ))}
+
       </div>
     </div>
   );
