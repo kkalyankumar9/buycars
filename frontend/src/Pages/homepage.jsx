@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CarsPages from './carsPages';
 
 const Homepage = () => {
   return (
@@ -25,6 +26,7 @@ const Homepage = () => {
       {/* Main Content */}
       <div className="p-8">
         <h1 className="text-4xl font-bold text-center text-white">Welcome to BuyCars</h1>
+        <CarsPages/>
       </div>
     </div>
   );

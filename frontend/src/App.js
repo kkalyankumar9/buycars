@@ -5,7 +5,8 @@ import MainRoute from './AllRoutes/MainRoute';
 function App() {
   return (
     <div className="App">
-     <MainRoute/>    </div>
+     <MainRoute/> 
+        </div>
   );
 }
 
