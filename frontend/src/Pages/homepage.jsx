@@ -16,7 +16,7 @@ const Homepage = () => {
             <Link to="/" className="text-white hover:text-gray-400">Home</Link>
             <Link to="/cars" className="text-white hover:text-gray-400">Cars</Link>
         
-               {userToken ? (
+               {/* {userToken ? (
                 <button
                   onClick={userLogout}
                   className="text-white hover:text-gray-400"
@@ -24,13 +24,14 @@ const Homepage = () => {
                   Logout
                 </button>
               ) : (
-                <Link
+               
+              )} */}
+               <Link
                   to="/user_signup"
                   className="text-white hover:text-gray-400"
                 >
                   User Signup
                 </Link>
-              )}
             
           </div>
           <div className="md:hidden flex items-center">
